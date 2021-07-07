@@ -1,12 +1,15 @@
 import logging
 import json
-
 from flask import Flask
 from flask_cors import CORS
+from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
+db = PyMongo()
+
 class JSONEncoder(json.JSONEncoder):
-    """ extend json-encoder class """
+    """ extend json-encoder class 
+    """
 
     def default(self, o):
         if isinstance(o, ObjectId):
@@ -19,12 +22,32 @@ class JSONEncoder(json.JSONEncoder):
 
 
 def create_app():
+    """ Creates and initializes a Flask object to be used
+    """
+
     app = Flask(__name__)
+    configure_mongo_uri(app)
     CORS(app, supports_credentials=True)
     app.json_encoder = JSONEncoder
     register_blueprints(app)
 
     return app
+
+
+def configure_mongo_uri(app):
+    """ Helper function to configure MongoDB URI 
+    """
+    # Setting up configurtion based on environment
+    app.config.from_pyfile('config.py')
+
+    # Connecting Flask App with DB
+    app.config["MONGO_URI"] = "mongodb+srv://"+app.config["MONGODB_USERNAME"] + \
+        ":"+app.config["MONGODB_PASSWORD"]+"@"+app.config["MONGODB_HOST"]
+    try:
+        db.init_app(app)
+        print("MongoDB connected.")
+    except Exception as e:
+        print(e)
 
 
 def register_blueprints(app):
@@ -42,4 +65,4 @@ def register_blueprints(app):
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(host="0.0.0.0")
+    app.run()

@@ -18,3 +18,5 @@ def create_new_user():
 
     # TODO: Return a message indicating success
     # https://github.com/lumi-io/whyphi-flask/blob/master/api/controllers/admin_postings.py
+
+    return

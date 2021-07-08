@@ -55,10 +55,12 @@ def register_blueprints(app):
     """
 
     from api.controllers.sample import sample
+    from api.controllers.authentication import authentication
 
     logging.info("Registering blueprints into app.")
 
     app.register_blueprint(sample)
+    app.register_blueprint(authentication)
 
     return app
 

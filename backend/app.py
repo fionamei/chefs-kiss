@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
-db = PyMongo()
+mongo = PyMongo()
 
 class JSONEncoder(json.JSONEncoder):
     """ extend json-encoder class 
@@ -44,7 +44,7 @@ def configure_mongo_uri(app):
     app.config["MONGO_URI"] = "mongodb+srv://"+app.config["MONGODB_USERNAME"] + \
         ":"+app.config["MONGODB_PASSWORD"]+"@"+app.config["MONGODB_HOST"]
     try:
-        db.init_app(app)
+        mongo.init_app(app)
         print("MongoDB connected.")
     except Exception as e:
         print(e)

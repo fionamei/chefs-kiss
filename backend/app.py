@@ -56,11 +56,13 @@ def register_blueprints(app):
 
     from api.controllers.sample import sample
     from api.controllers.authentication import authentication
+    from api.controllers.yelp import yelp
 
     logging.info("Registering blueprints into app.")
 
     app.register_blueprint(sample)
     app.register_blueprint(authentication)
+    app.register_blueprint(yelp)
 
     return app
 

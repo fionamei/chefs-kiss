@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_pymongo import PyMongo
 from app import mongo
 import time
+from bson.objectid import ObjectId
 
 orders = Blueprint("orders", __name__)  # initialize blueprint
 
@@ -86,7 +87,8 @@ def get_all_orders():
         all_orders += [order]
     response_object = {
         "status": True,
-        "message": "Success!"
+        "message": "Success!",
+        "result": all_orders
     }
     return jsonify(response_object)
 

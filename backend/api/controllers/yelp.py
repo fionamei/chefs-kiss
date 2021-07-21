@@ -7,7 +7,7 @@ yelp = Blueprint("yelp", __name__)  # initialize blueprint
 API_KEY = os.getenv('API_KEY')
 
 @yelp.route("/api/find-nearby-restaurants", methods=["POST"])
-def create_new_order():
+def generate_restaurants():
     """ API that gets a list of nearby restaurants based off of user's input location
     """
 
@@ -15,11 +15,16 @@ def create_new_order():
 
     ENDPOINT = 'https://api.yelp.com/v3/businesses/search'
     HEADERS = {
-        'Authorization': 'bearer %s' %API_KEY
+        'Authorization': 'Bearer %s' %API_KEY
     }
+
+    res = request.get_json()
+
+    location = res["location"]
+
     PARAMETERS = {
                 'term': 'restaurant',
-                'location': "700comonweth ave", #spelling mistakes are ok
+                'location': location, #spelling mistakes are ok
                 'limit': 10
                 }
 
@@ -27,11 +32,14 @@ def create_new_order():
 
     business_data = response.json()
 
-    res_data = {}
+    restaurants = []
     for biz in business_data['businesses']:
-        res_data[biz['name']] = biz['location']['display_address']
-        res_data[biz['name']] += ["Rating: " + str(biz.get('rating', "No Rating"))]
-        res_data[biz['name']] += ["Price: " + biz.get("price", "No Price Description")]
+        res_data={}
+        res_data["name"] = biz["name"]
+        res_data["location"] = biz['location']['display_address']
+        res_data["rating"] = biz.get('rating', "No Rating")
+        res_data["price"] = biz.get("price", "No Price Description")
+        restaurants.append(res_data)
         
     # TODO: Potential - find ways to cleanse/parse location so Yelp can use it to find restaurants
     # TODO: Input location into Yelp's API endpoint (/businesses/search --> maybe not too sure)
@@ -40,5 +48,8 @@ def create_new_order():
 
     # The above instructions might not be complete, but they are very high-level so please do additional research if necessary.
 
-    return res_data
+    return {
+        "status": "Success",
+        "result": restaurants
+    }
     # return {"status": "success"}

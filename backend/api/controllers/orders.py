@@ -108,6 +108,7 @@ def get_specific_order(order_id):
         return jsonify(response_object)
     response_object = {
         "status": True,
-        "message": "Success!"
+        "message": "Success!",
+        "result": order
     }
     return jsonify(response_object)

@@ -10,6 +10,7 @@ bson = "*"
 flask-pymongo = "*"
 python-dotenv = "*"
 dnspython = "*"
+requests = "*"
 
 [dev-packages]
 

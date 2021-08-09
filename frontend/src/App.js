@@ -1,14 +1,15 @@
 import "./App.css";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import Main from "./components/Main";
+// import Main from "./components/Main";
+import ViewOrders from "./components/ViewOrders";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={Main} />
+          <Route exact path="/" component={ViewOrders} />
           {/* Component to view all the orders --> Sharon */}
           <Route exact path="/orders" /> 
 

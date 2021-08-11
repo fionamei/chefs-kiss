@@ -3,6 +3,10 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import Main from "./components/Main";
 
+
+
+import Save from "./components/Save";
+
 function App() {
   return (
     <Router>
@@ -16,7 +20,7 @@ function App() {
           <Route exact path="/orders/:order-id" />
           
           {/* Component to view form in order to save an order --> Daniel */}
-          <Route exact path="/save-order" />
+          <Route exact path="/save-order" component={Save}/>
 
           {/* Component to view form in order to save an order --> Fiona */}
           <Route exact path="/find-restaurants" />

@@ -1,9 +1,12 @@
 import "./App.css";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import React, { useState } from "react";
 
 import Main from "./components/Main";
+import Location from "./components/Location";
 
 function App() {
+
   return (
     <Router>
       <div className="App">
@@ -18,8 +21,8 @@ function App() {
           {/* Component to view form in order to save an order --> Daniel */}
           <Route exact path="/save-order" />
 
-          {/* Component to view form in order to save an order --> Fiona */}
-          <Route exact path="/find-restaurants" />
+          {/* Component to enter location and view restaurants --> Fiona */}
+          <Route exact path="/find-restaurants" component={Location}/>
         </Switch>
       </div>
     </Router>

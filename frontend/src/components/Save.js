@@ -3,7 +3,7 @@ import Axios from "axios";
 import Button from '@material-ui/core/Button';
 
 function Save() {
-    const url = "http://127.0.0.1:5000/api/create-order"
+    const url = "http://127.0.0.1:5000/api/create-order";
     const [data,setData] = useState({
         Name: "",
         Restaurant: "",

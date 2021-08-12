@@ -5,6 +5,10 @@ import React, { useState } from "react";
 import Main from "./components/Main";
 import Location from "./components/Location";
 
+
+
+import Save from "./components/Save";
+
 function App() {
 
   return (
@@ -19,7 +23,7 @@ function App() {
           <Route exact path="/orders/:order-id" />
           
           {/* Component to view form in order to save an order --> Daniel */}
-          <Route exact path="/save-order" />
+          <Route exact path="/save-order" component={Save}/>
 
           {/* Component to enter location and view restaurants --> Fiona */}
           <Route exact path="/find-restaurants" component={Location}/>

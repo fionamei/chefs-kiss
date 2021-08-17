@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import Main from "./components/Main";
 import ViewOrders from "./components/ViewOrders";
+import ViewSpecificOrder from "./components/ViewSpecificOrder";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           <Route exact path="/orders" component={ViewOrders}/> 
 
           {/* Component to view specific order with given id */}
-          <Route exact path="/orders/:order-id" />
+          <Route exact path="/orders/:order-id" component={ViewSpecificOrder}/>
           
           {/* Component to view form in order to save an order --> Daniel */}
           <Route exact path="/save-order" />

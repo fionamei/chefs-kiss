@@ -25,16 +25,15 @@ export default function ViewOrders() {
         getAllOrders();
     }, []);
 
-    // const url = 'http://localhost:5000/api/get-all-orders';
     const getAllOrders = () => {
         axios.get(`http://localhost:5000/api/get-all-orders`)
         .then((response) => {
             const allOrders = response.data.result;
-            // console.log(response.data.result);
             getOrders(allOrders);
-            // () => window.location.reload(); 
         })
-        .catch(error => console.error(`Error: ${error}`));
+        .catch((error) => {
+          console.error(`Error: ${error}`);
+        })
     }
 
     return (
@@ -43,9 +42,9 @@ export default function ViewOrders() {
 }
 
 function OrderList(props) {
-
     const displayOrder = (props) => {
         const {orders} = props;
+
         if (orders.length > 0) {
             return (
                 orders.map((order) => {
@@ -57,7 +56,6 @@ function OrderList(props) {
             )
         }
     }
-    // console.log(props.orders)
     return(
          <>
             <h2>My Orders:</h2>
@@ -67,30 +65,88 @@ function OrderList(props) {
 }
 
 const Order = (props) => {
+  const [open, setOpen] = useState(false);
+  const deleteURL = "http://localhost:5000/api/delete-order/";
+  const classes = useStyles();
 
-    const classes = useStyles();
-    return (
-        console.log(props.children._id),
-        <Grid className={classes.root} style={{alignItems: 'stretch'}}>
-            <Grid item style={{display: 'flex'}}>
-            <CustomCard p={2} className="order" variant="outlined" container direction={"column"}>
-                {/* <CardActionArea component="ViewSpecificOrder" order> */}
-                {/* <Link to={"/orders"+order._id} style={{ color: 'inherit', textDecoration: 'none' }}> */}
-                    <CardActions>
-                        <ConfirmDelete>{props.children._id}</ConfirmDelete>
-                    </CardActions>
-                    <CardContent>
-                        {/* <Typography gutterBottom variant="body" component="div"> */}
+  function deleteOrder(id) {
+      axios.delete(deleteURL + id)
+      .then((response) => {
+          console.log(response.data);
+      })
+      .then(() => {
+        window.location.reload();
+      })
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+      console.log(props.children._id),
+      <Grid 
+        container spacing={5} 
+        className={classes.root} 
+        style={{alignItems: 'stretch'}}
+      >
+        <Grid 
+          item xs 
+          style={{display: 'flex'}}
+        >
+          <CustomCard 
+            p={2} 
+            className="order" 
+            variant="outlined" 
+            container direction={"column"}
+          >
+              <CardActionArea>
+                  <CardContent>
+                      {/* <Typography gutterBottom variant="body" component="div"> */}
+                      <Typography p={1}>
+                        <Link to={"/orders/"+props.children._id} style={{ color: 'inherit', textDecoration: 'none' }}>
                         {props.children.name}
-                        {/* </Typography> */}
-                    </CardContent>
-                
-                {/* </Link> */}
-                {/* </CardActionArea> */}
-            </CustomCard>
-            </Grid>
-        </Grid>
-    )
+                        </Link>
+                      </Typography>
+                      {/* <ConfirmDelete>{props.children._id}</ConfirmDelete> */}
+                      <Button 
+                        variant="outlined" 
+                        color="primary" 
+                        onClick={handleClickOpen} 
+                        style={{cursor: "pointer"}}
+                      >
+                        <DeleteOutlinedIcon></DeleteOutlinedIcon>
+                      </Button>
+                      <Dialog 
+                        open={open} 
+                        onClose={handleClose}
+                      >
+                        <DialogContent>
+                          <DialogContentText>
+                            Confirm Delete?
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose} color="primary">
+                            Cancel
+                          </Button>
+                          <Button onClick={() => deleteOrder(props.children)} color="primary">
+                            Delete
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                  </CardContent>
+              
+              {/* </Link> */}
+              </CardActionArea>
+          </CustomCard>
+          </Grid>
+      </Grid>
+  )
 }
 
 
@@ -100,10 +156,6 @@ const CustomCard = styled(Card) ({
     textAlign:'center',
     justifyContent:"center",
     background:'#FDDCD8',
-});
-
-const CustomButton = styled(Button)({
-    justifyContent:"center"
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -116,49 +168,3 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.textSecondary,
   },
 }));
-
-const ConfirmDelete = (props) => {
-    const [open, setOpen] = useState(false);
-  
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-
-    const deleteURL = "http://localhost:5000/api/delete-order/"
-    function deleteOrder(id) {
-        // e.preventDefault();
-        axios.delete(deleteURL + id)
-        .then(response => {
-            console.log(response.data)
-        })
-        .then( () => window.location.reload());
-    }
-  
-    return (
-        console.log(props.children),
-      <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          <DeleteOutlinedIcon></DeleteOutlinedIcon>
-        </Button>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogContent>
-            <DialogContentText>
-              Confirm Delete?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={() => deleteOrder(props.children)} color="primary">
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
-  }

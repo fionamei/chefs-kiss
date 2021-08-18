@@ -11,10 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import { styled } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import { useParams } from "react-router-dom";
 
 export default function ViewThisOrder() {
     // get data from API
     const [order,getOrder] = useState('');
+    const { OrderID } = useParams();
 
     useEffect(() => {
         getThisOrder();
@@ -22,19 +24,24 @@ export default function ViewThisOrder() {
 
     // const url = 'http://localhost:5000/api/get-all-orders';
     const getThisOrder = () => {
-        axios.get(`http://localhost:5000/api/get-all-orders`+this.props.match.params.id)
+        axios.get(`http://localhost:5000/api/get-all-orders/`+OrderID)
         .then((response) => {
             const order = response.data.result;
             // console.log(response.data.result);
+            console.log(order);
             getOrder(order);
         })
-        .catch(error => console.error(`Error: ${error}`));
+        .catch((error) => {
+            console.error(`Error: ${error}`);
+        })
     }
 
     return (
-        <Order order={order}/>
+        <div>
+            {console.log("Hello")}
+            <Order order={order}/>
+        </div>
     )
-
 }
 
 

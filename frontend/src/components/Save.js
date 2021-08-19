@@ -1,4 +1,4 @@
-import React, { useState, setState } from "react";
+import React, { useState } from "react";
 import Axios from "axios";
 import { Button, TextField, makeStyles } from "@material-ui/core";
 
@@ -18,7 +18,7 @@ function Save() {
     const [data,setData] = useState({
         Name: "",
         Restaurant: "",
-        Items: ""
+        Items: []
     });
 
     function submit(e){
@@ -34,7 +34,7 @@ function Save() {
         setData({
             Name: "",
             Restaurant: "",
-            Items: ""
+            Items: []
         })
     };
 
@@ -44,7 +44,20 @@ function Save() {
         setData(newdata)
         console.log(newdata)
     };
-
+    // ITEMS STUFF
+    const [itemsText, setItemsText] = useState("");
+    const itemsTextHandler = (e) => {
+        setItemsText(e.target.value);
+    };
+    const submitItemsHandler = (e) => {
+        e.preventDefault();
+        setData({
+            Name: data.Name,
+            Restaurant: data.Restaurant,
+            Items: [...data.Items, itemsText]
+        });
+        setItemsText("");
+    };
     return (
         <div>
             <h1>Save an Order!</h1>
@@ -73,7 +86,7 @@ function Save() {
                     size="small"
                     required
                 />
-                <TextField
+                {/* <TextField
                     className={classes.field}
                     onChange={(e) => handle(e)}
                     id="Items"
@@ -84,12 +97,25 @@ function Save() {
                     color="secondary"
                     size="small"
                     required
+                /> */}
+                <br></br>
+                <TextField 
+                    id="Items"
+                    placeholder="Items"
+                    type="text"
+                    variant="outlined"
+                    color="secondary"
+                    size="small"
+                    value={itemsText} 
+                    onChange={itemsTextHandler}
                 />
+                <Button onClick={submitItemsHandler} variant="outlined" type="submit" size="large">+</Button>
+                <br></br>
                 <br></br>
                 <Button variant="outlined" type="submit" size="large">Submit</Button>
             </form>
         </div>
     )
-}
+};
 
 export default Save

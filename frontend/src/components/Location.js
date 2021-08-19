@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import Navbar from "./Navbar";
 
 
 const Location = () => {
@@ -74,6 +75,7 @@ const Location = () => {
 
     return (
         <div>
+            <Navbar />
             <h1>Search page</h1>
             <Paper component="form" className={classes.root}>
                 <InputBase

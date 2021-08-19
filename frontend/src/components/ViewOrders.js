@@ -58,7 +58,7 @@ function OrderList(props) {
     }
     return(
          <>
-            <h2>My Orders:</h2>
+            <h1>My Orders:</h1>
             {displayOrder(props)}
          </>
     )
@@ -108,7 +108,9 @@ const Order = (props) => {
                   <CardContent>
                       {/* <Typography gutterBottom variant="body" component="div"> */}
                       <Typography p={1}>
-                        <Link to={"/orders/"+props.children._id} style={{ color: 'inherit', textDecoration: 'none' }}>
+                        <Link to={{
+                          pathname: `/orders/${props.children._id}`, 
+                          }} style={{ color: 'inherit', textDecoration: 'none' }}>
                         {props.children.name}
                         </Link>
                       </Typography>
@@ -134,7 +136,7 @@ const Order = (props) => {
                           <Button onClick={handleClose} color="primary">
                             Cancel
                           </Button>
-                          <Button onClick={() => deleteOrder(props.children)} color="primary">
+                          <Button onClick={() => deleteOrder(props.children._id)} color="primary">
                             Delete
                           </Button>
                         </DialogActions>

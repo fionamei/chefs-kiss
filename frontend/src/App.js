@@ -15,8 +15,8 @@ function App() {
           <Route exact path="/orders" component={ViewOrders}/> 
 
           {/* Component to view specific order with given id */}
-          <Route exact path="/orders/:order-id"/>
-            <ViewSpecificOrder/>
+          <Route exact path="/orders/:id" component={ViewSpecificOrder}/>
+            {/* <ViewSpecificOrder/> */}
           {/* Component to view form in order to save an order --> Daniel */}
           <Route exact path="/save-order" />
 

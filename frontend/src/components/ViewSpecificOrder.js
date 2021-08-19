@@ -15,8 +15,8 @@ import { useParams } from "react-router-dom";
 
 export default function ViewThisOrder() {
     // get data from API
-    const [order,getOrder] = useState('');
-    const { OrderID } = useParams();
+    const [order,getOrder] = useState('')
+    const { id } = useParams()
 
     useEffect(() => {
         getThisOrder();
@@ -24,21 +24,24 @@ export default function ViewThisOrder() {
 
     // const url = 'http://localhost:5000/api/get-all-orders';
     const getThisOrder = () => {
-        axios.get(`http://localhost:5000/api/get-all-orders/`+OrderID)
+        axios.get(`http://localhost:5000/api/get-all-orders/` + id)
         .then((response) => {
             const order = response.data.result;
             // console.log(response.data.result);
-            console.log(order);
+            console.log("order: "+order);
             getOrder(order);
         })
         .catch((error) => {
+            console.log(id)
+            // console.log(this.props.match.params._id)
             console.error(`Error: ${error}`);
         })
     }
 
     return (
         <div>
-            {console.log("Hello")}
+            <br></br>
+            <br></br>
             <Order order={order}/>
         </div>
     )
@@ -53,36 +56,29 @@ function Order(props) {
 
             return (
                 <div className={classes.root}>
-                {/* <Grid container spacing={5}>
-                <Grid item xs> */}
                 <CustomCard p={2} className="order" variant="outlined" container direction={"column"}                       >
                     <CardContent>
-                        <Typography sx={{ fontSize: 15 }} color="text.secondary" gutterBottom>
+                        <Typography sx={{ fontSize: 15 }} color="textSecondary" gutterBottom>
                         Restaurant: {order.restaurant}
                         </Typography>
                         <Typography gutterBottom variant="h4" component="div">
                         {order.name}
                         </Typography>
                         <Typography gutterBottom variant="body1" component="div">
-                        Items Ordered: {order.itemsOrdered}
-                        {console.log(order.itemsOrdered)}
-                        {/* <>{displayItems(order.itemsOrdered)}</> */}
-                        {/* Items Ordered: gvv{order.itemsOrdered.map(item => (<Typography gutterBottom variant="body1" component="div">{item}</Typography>))} */}
+                            {console.log("Items: " + order.itemsOrdered)}
+                            {displayItems(order.itemsOrdered)}
                         </Typography>
                     </CardContent>
                     <CardActions>
                         <CustomButton size="small" variant='outlined'
-                        onClick={() => (window.location.href="/orders/" + order._id)}>
-                            View
+                        onClick={() => (window.location.href="/orders/")}>
+                            Return
                         </CustomButton>
                     </CardActions>
                 </CustomCard>
-                {/* </Grid>
-                </Grid> */}
                 </div>
             )
     }
-    // console.log(props.orders)
     return(
          <>
             {displayOrder(props)}
@@ -114,4 +110,31 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.textSecondary,
   },
 }));
+
+function displayItems(props) {
+    if (props !== undefined) {
+        return (
+            <div>
+                Items Ordered: {
+                    props.map(
+                        item => (
+                            <Typography gutterBottom variant="body1" 
+                                        component="div"
+                            >
+                            {item}
+                            </Typography>
+                        )
+                    )
+                }
+            </div>
+        )
+    }
+    else {
+        return (
+            <div>
+                Items Ordered: {props}
+            </div>
+        )
+    }
+}
 

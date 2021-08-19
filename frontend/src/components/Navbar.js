@@ -37,7 +37,12 @@ const Navbar = () => {
             flexGrow: 1,
         },
     }));
-
+// 
+// 
+// 
+// 
+// 
+// 
     const classes = useStyles();
     const [state, setState] = React.useState({
         left: false,
@@ -55,9 +60,7 @@ const Navbar = () => {
 
     const list = (anchor) => (
         <div
-            className={clsx(classes.list, {
-                [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-            })}
+            className={clsx(classes.list)}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
@@ -86,7 +89,7 @@ const Navbar = () => {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" style={{ backgroundColor: "#C6F5AB" }}>
+            <AppBar position="static" style={{ backgroundColor: "#B6F5AB" }}>
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} aria-label="menu">
                         <MenuIcon onClick={toggleDrawer('left', true)} />

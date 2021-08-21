@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -19,7 +18,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 export default function ViewOrders() {
     // get data from API
-    const [orders,getOrders] = useState('');
+    const [orders,getOrders] = useState([]);
 
     useEffect(() => {
         getAllOrders();
@@ -30,6 +29,7 @@ export default function ViewOrders() {
         .then((response) => {
             const allOrders = response.data.result;
             getOrders(allOrders);
+            console.log(response.data.result)
         })
         .catch((error) => {
           console.error(`Error: ${error}`);
@@ -37,7 +37,9 @@ export default function ViewOrders() {
     }
 
     return (
-        <OrderList orders={orders}/>
+        <div>
+          <OrderList orders={orders}/>
+        </div>
     )
 }
 
@@ -47,10 +49,9 @@ function OrderList(props) {
 
         if (orders.length > 0) {
             return (
-                orders.map((order) => {
-                    console.log(order);
+                orders.map((order, i) => {
                     return(
-                        <Order>{order}</Order>
+                        <Order key={i}>{order}</Order>
                     )
                 })
             )
@@ -66,11 +67,10 @@ function OrderList(props) {
 
 const Order = (props) => {
   const [open, setOpen] = useState(false);
-  const deleteURL = "http://localhost:5000/api/delete-order/";
   const classes = useStyles();
 
   function deleteOrder(id) {
-      axios.delete(deleteURL + id)
+      axios.delete("http://localhost:5000/api/delete-order/" + id)
       .then((response) => {
           console.log(response.data);
       })
@@ -88,7 +88,6 @@ const Order = (props) => {
   };
 
   return (
-      console.log(props.children._id),
       <Grid 
         container spacing={5} 
         className={classes.root} 
@@ -106,23 +105,22 @@ const Order = (props) => {
           >
               <CardActionArea>
                   <CardContent>
-                      {/* <Typography gutterBottom variant="body" component="div"> */}
                       <Typography p={1}>
                         <Link to={{
                           pathname: `/orders/${props.children._id}`, 
-                          }} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          }} style={{ color: 'inherit', textDecoration: 'none' }}
+                        >
                         {props.children.name}
                         </Link>
                       </Typography>
-                      {/* <ConfirmDelete>{props.children._id}</ConfirmDelete> */}
-                      <Button 
+                      <DeleteOutlinedIcon
                         variant="outlined" 
                         color="primary" 
                         onClick={handleClickOpen} 
                         style={{cursor: "pointer"}}
                       >
-                        <DeleteOutlinedIcon></DeleteOutlinedIcon>
-                      </Button>
+                      </DeleteOutlinedIcon>
+
                       <Dialog 
                         open={open} 
                         onClose={handleClose}
@@ -140,10 +138,8 @@ const Order = (props) => {
                             Delete
                           </Button>
                         </DialogActions>
-                      </Dialog>
+                    </Dialog>
                   </CardContent>
-              
-              {/* </Link> */}
               </CardActionArea>
           </CustomCard>
           </Grid>

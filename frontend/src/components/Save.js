@@ -16,25 +16,25 @@ function Save() {
     const classes = useStyles();
 
     const [data,setData] = useState({
-        Name: "",
-        Restaurant: "",
-        Items: []
+        mealName: "",
+        mealRestaurant: "",
+        items: []
     });
 
     function submit(e){
         e.preventDefault();
         Axios.post(url,{
-            name: data.Name,
-            restaurant: data.Restaurant,
-            itemsOrdered: data.Items
+            name: data.mealName,
+            restaurant: data.mealRestaurant,
+            itemsOrdered: data.items
         })
         .then(res => {
             console.log(res.data)
         })
         setData({
-            Name: "",
-            Restaurant: "",
-            Items: []
+            mealName: "",
+            mealRestaurant: "",
+            items: []
         })
     };
 
@@ -52,9 +52,9 @@ function Save() {
     const submitItemsHandler = (e) => {
         e.preventDefault();
         setData({
-            Name: data.Name,
-            Restaurant: data.Restaurant,
-            Items: [...data.Items, itemsText]
+            mealName: data.mealName,
+            mealRestaurant: data.mealRestaurant,
+            items: [...data.items, itemsText]
         });
         setItemsText("");
     };
@@ -65,8 +65,8 @@ function Save() {
                 <TextField
                     className={classes.field}
                     onChange={(e) => handle(e)}
-                    id="Name"
-                    value={data.Name}
+                    id="mealName"
+                    value={data.mealName}
                     placeholder="Name"
                     type="text"
                     variant="outlined"
@@ -77,8 +77,8 @@ function Save() {
                 <TextField
                     className={classes.field}
                     onChange={(e) => handle(e)}
-                    id="Restaurant"
-                    value={data.Restaurant}
+                    id="mealRestaurant"
+                    value={data.mealRestaurant}
                     placeholder="Restaurant"
                     type="text"
                     variant="outlined"
@@ -100,7 +100,7 @@ function Save() {
                 /> */}
                 <br></br>
                 <TextField 
-                    id="Items"
+                    id="items"
                     placeholder="Items"
                     type="text"
                     variant="outlined"

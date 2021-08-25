@@ -1,11 +1,15 @@
 import "./App.css";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import React, { useState } from "react";
 
 import Main from "./components/Main";
 import ViewOrders from "./components/ViewOrders";
 import ViewSpecificOrder from "./components/ViewSpecificOrder";
+import Location from "./components/Location";
+import Save from "./components/Save";
 
 function App() {
+
   return (
     <Router>
       <div className="App">
@@ -18,10 +22,10 @@ function App() {
           <Route exact path="/orders/:id" component={ViewSpecificOrder}/>
           
           {/* Component to view form in order to save an order --> Daniel */}
-          <Route exact path="/save-order" />
+          <Route exact path="/save-order" component={Save}/>
 
-          {/* Component to view form in order to save an order --> Fiona */}
-          <Route exact path="/find-restaurants" />
+          {/* Component to enter location and view restaurants --> Fiona */}
+          <Route exact path="/find-restaurants" component={Location}/>
         </Switch>
       </div>
     </Router>

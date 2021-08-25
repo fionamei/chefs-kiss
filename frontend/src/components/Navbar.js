@@ -47,8 +47,7 @@ const Navbar = () => {
     const [state, setState] = React.useState({
         left: false,
     });
-
-    const preventDefault = (event) => event.preventDefault();
+    console.log(state)
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -97,7 +96,7 @@ const Navbar = () => {
                             {list('left')}
                         </Drawer>
                     </IconButton>
-                    <Typography variant="h6" color="textSecondary" className={classes.title}>
+                    <Typography variant="h6" color="textSecondary" align="left" className={classes.title}>
                         Chef's Kiss
                     </Typography>
                 </Toolbar>

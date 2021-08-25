@@ -7,12 +7,13 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import Navbar from "./Navbar";
 
 
 const Location = () => {
 
     const [location, setLocation] = useState("");
-    const [restaurant, setRestaurant] = useState([]);
+    const [restaurants, setRestaurants] = useState([]);
 
     //functions
     const locationHandler = (e) => {
@@ -29,7 +30,7 @@ const Location = () => {
         })
             .then((response) => {
                 //handle success
-                setRestaurant(response.data.result)
+                setRestaurants(response.data.result)
             })
             .catch(err => {
                 //handle error
@@ -42,7 +43,7 @@ const Location = () => {
         axios
             .get('http://localhost:5000/api/find-nearby-restaurants')
             .then((response) => {
-                setRestaurant(response.data.result);
+                setRestaurants(response.data.result);
             })
             .catch(
                 (err => {
@@ -74,6 +75,7 @@ const Location = () => {
 
     return (
         <div>
+            <Navbar />
             <h1>Search page</h1>
             <Paper component="form" className={classes.root}>
                 <InputBase
@@ -86,7 +88,7 @@ const Location = () => {
                     <SearchIcon />
                 </IconButton>
             </Paper>
-            <Restaurants restaurant={restaurant} />
+            <Restaurants restaurant={restaurants} />
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar";
 
 const Main = () => {
 
@@ -7,7 +8,8 @@ const Main = () => {
 
   return (
     <div>
-        <h1>Main Page</h1>
+      <Navbar />
+      <h1>Main Page</h1>
     </div>
   );
 };

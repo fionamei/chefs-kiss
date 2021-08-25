@@ -14,6 +14,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
+import Navbar from "./Navbar";
 
 
 export const Restaurants = ({ restaurant }) => {
